@@ -1,6 +1,24 @@
 apply plugin: 'com.android.application'
 
 android {
+  /*  splits {
+        abi {
+            enable true
+            reset()
+            include "armeabi", "armeabi-v7a", 'arm64-v8a', "mips", "x86", "x86_64", 'arm64-v8a'
+            universalApk true
+        }
+    }*/
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include "x86", "armeabi-v7a", "mips"
+            universalApk false
+        }
+    }
+
     compileSdkVersion 28
     defaultConfig {
         applicationId "selfie_app.ibrahim.selfie.com.selfiecamebyhand"
@@ -12,7 +30,7 @@ android {
         externalNativeBuild {
             cmake {
                 cppFlags "-frtti -fexceptions"
-                abiFilters 'x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a'
+                abiFilters 'x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a' , 'mips'
 
             }
         }
@@ -30,7 +48,23 @@ android {
     }
     sourceSets { main { jni.srcDirs = ['src/main/jni', 'src/main/jniLibs/'] } }
 }
-
+/*ext.versionCodes = ['armeabi': 3, 'armeabi-v7a': 4, 'arm64-v8a': 5,
+                    mips: 6, 'x86': 7, 'x86_64': 8]
+import com.android.build.OutputFile
+// For each APK output variant, override versionCode with a combination
+// of ABI APK value * 1000 + defaultConfig.versionCode
+android.applicationVariants.all { variant ->
+// assign different version code for each output
+    variant.outputs.each { output ->
+        def abiFilter = output.getFilter(OutputFile.ABI)
+        def abiMultiplier = 0
+        if (abiFilter != null) {
+            abiMultiplier = project.ext.versionCodes.get(abiFilter)
+        }
+        output.versionCodeOverride =
+                abiMultiplier * 1000 + android.defaultConfig.versionCode
+    }
+}*/
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:28.0.0'

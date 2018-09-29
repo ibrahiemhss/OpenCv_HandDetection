@@ -19,7 +19,7 @@ public class DetectionBasedTracker
     }
 
     public void setMinFaceSize(int size) {
-        nativeSetFaceSize(mNativeObj, size);
+        nativeSetHandSize(mNativeObj, size);
     }
 
     public void detect(Mat imageGray, MatOfRect faces) {
@@ -37,7 +37,7 @@ public class DetectionBasedTracker
     private static native void nativeDestroyObject(long thiz);
     private static native void nativeStart(long thiz);
     private static native void nativeStop(long thiz);
-    private static native void nativeSetFaceSize(long thiz, int size);
+    private static native void nativeSetHandSize(long thiz, int size);
     private static native void nativeDetect(long thiz, long inputImage, long faces);
 }
 

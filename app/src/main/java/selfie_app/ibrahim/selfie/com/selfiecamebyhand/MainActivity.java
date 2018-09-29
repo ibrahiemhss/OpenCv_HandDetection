@@ -179,7 +179,8 @@ public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
         if (Math.round(height * mRelativeFaceSize) > 0) {
         mAbsoluteFaceSize = Math.round(height * mRelativeFaceSize);
         }
-//        mNativeDetector.setMinFaceSize(mAbsoluteFaceSize);
+
+        mNativeDetector.setMinFaceSize(mAbsoluteFaceSize);
         }
 
         MatOfRect faces = new MatOfRect();
