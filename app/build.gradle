@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-  /*  splits {
+    splits {
         abi {
             enable true
             reset()
             include "armeabi", "armeabi-v7a", 'arm64-v8a', "mips", "x86", "x86_64", 'arm64-v8a'
             universalApk true
         }
-    }*/
-
+    }
+/*
     splits {
         abi {
             enable true
@@ -17,12 +17,12 @@ android {
             include "x86", "armeabi-v7a", "mips"
             universalApk false
         }
-    }
+    }*/
 
     compileSdkVersion 28
     defaultConfig {
         applicationId "selfie_app.ibrahim.selfie.com.selfiecamebyhand"
-        minSdkVersion 15
+        minSdkVersion 14
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -48,7 +48,7 @@ android {
     }
     sourceSets { main { jni.srcDirs = ['src/main/jni', 'src/main/jniLibs/'] } }
 }
-/*ext.versionCodes = ['armeabi': 3, 'armeabi-v7a': 4, 'arm64-v8a': 5,
+ext.versionCodes = ['armeabi': 3, 'armeabi-v7a': 4, 'arm64-v8a': 5,
                     mips: 6, 'x86': 7, 'x86_64': 8]
 import com.android.build.OutputFile
 // For each APK output variant, override versionCode with a combination
@@ -64,7 +64,7 @@ android.applicationVariants.all { variant ->
         output.versionCodeOverride =
                 abiMultiplier * 1000 + android.defaultConfig.versionCode
     }
-}*/
+}
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:28.0.0'

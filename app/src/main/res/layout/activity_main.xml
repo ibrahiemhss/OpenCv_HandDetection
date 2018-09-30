@@ -20,6 +20,21 @@
         android:layout_margin="5dp"
         android:textColor="@android:color/white"
         android:textSize="30sp" />
+    <TextView
+        android:id="@+id/txt_timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/method"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="5dp"
+        android:textColor="@android:color/white"
+        android:textSize="30sp" />
+    <Button
+        android:id="@+id/btnTakePic"
+        android:layout_width="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
+        android:text="take photo"/>
 
 
 
