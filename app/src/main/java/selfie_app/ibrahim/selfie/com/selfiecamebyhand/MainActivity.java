@@ -42,19 +42,11 @@ import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2, Runnable {
 
-    // Used to load the 'native-lib' library on application startup.
-    static {
-        System.loadLibrary("native-lib");
-    }
-
-
+    public static final int JAVA_DETECTOR = 0;
+    public static final int NATIVE_DETECTOR = 1;
     private static final String TAG = "OCVSample::Activity";
     private static final Scalar CLOSED_HAND_RECT_COLOR = new Scalar(0, 255, 0, 255);
     private static final Scalar OPENED_HAND_RECT_COLOR = new Scalar(0, 255, 0, 255);
-
-    public static final int JAVA_DETECTOR = 0;
-    public static final int NATIVE_DETECTOR = 1;
-
     private static final int TM_SQDIFF = 0;
     private static final int TM_SQDIFF_NORMED = 1;
     private static final int TM_CCOEFF = 2;
@@ -62,29 +54,33 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     private static final int TM_CCORR = 4;
     private static final int TM_CCORR_NORMED = 5;
 
+    // Used to load the 'native-lib' library on application startup.
+    static {
+        System.loadLibrary("native-lib");
+    }
+
+    int method = 0;
+    Thread mThread;
+    double xCenter = -1;
+    double yCenter = -1;
+    int count = 0;
+    long time = 5;
     private int learn_frames = 0;
     private Mat teplateR;
     private Mat teplateL;
-    int method = 0;
-
-
     private volatile boolean running = false;
     private volatile int qtdClosedHand;
     private volatile int qtdOpenedHand;
-    Thread mThread;
-
     private MatOfRect mOpenHand;
     private MatOfRect mCloseHand;
     // matrix for zooming
     private Mat mZoomWindow;
     private Mat mZoomWindow2;
-
     private MenuItem mItemClosedHand50;
     private MenuItem mItemClosedHand40;
     private MenuItem mItemClosedHand30;
     private MenuItem mItemClosedHand20;
     private MenuItem mItemType;
-
     private Mat mRgba;
     private Mat mGray;
     private File mClosedHandCascadeFile;
@@ -93,25 +89,17 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     private CascadeClassifier mJavaDetectorClosedHand;
     private DetectionBasedTracker mNativeDetectorOpenedHand;
     private DetectionBasedTracker mNativeDetectorClosedHand;
-
     private int mDetectorType = JAVA_DETECTOR;
     private String[] mDetectorName;
-
     private float mRelativeOpenHandSize = 0.2f;
     private int mAbsoluteOpenHandSize = 0;
-
     private float mRelativeCloseHandSize = 0.2f;
     private int mAbsoluteCloseHandSize = 0;
-
     private SeekBar mMethodSeekbar;
     private TextView mValue;
     private TextView mTxtTimer;
     private Button mBtnTakePic;
     private int mRepeatAlarm = 5;
-
-    double xCenter = -1;
-    double yCenter = -1;
-
     private MediaPlayer mPlayer1;
     private MediaPlayer mPlayer2;
     private MediaPlayer mPlayer3;
@@ -120,9 +108,6 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     private boolean mIsTimer;
     private boolean isTakePic;
     private BeepRunnable mBeepRunnable;
-    int count = 0;
-
-
     private boolean started = false;
     private Handler handler = new Handler();
     private Timer timer;
@@ -135,23 +120,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
             mTxtTimer.setText(String.valueOf(i));
         }
     };
-
-    public void start() {
-        if (timer != null) {
-            return;
-        }
-        timer = new Timer();
-        timer.scheduleAtFixedRate(timerTask, 0, 2000);
-    }
-
-    public void stop() {
-        timer.cancel();
-        timer = null;
-    }
-
-
     private CameraBridgeViewBase mOpenCvCameraView;
-
     private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
         public void onManagerConnected(int status) {
@@ -240,6 +209,19 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         Log.i(TAG, "Instantiated new " + this.getClass());
 
 
+    }
+
+    public void start() {
+        if (timer != null) {
+            return;
+        }
+        timer = new Timer();
+        timer.scheduleAtFixedRate(timerTask, 0, 2000);
+    }
+
+    public void stop() {
+        timer.cancel();
+        timer = null;
     }
 
     /**
@@ -342,7 +324,6 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         mZoomWindow.release();
         mZoomWindow2.release();
     }
-
 
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
 
@@ -484,8 +465,6 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         }
 
     }
-
-    long time = 5;
 
     @Override
     public void run() {

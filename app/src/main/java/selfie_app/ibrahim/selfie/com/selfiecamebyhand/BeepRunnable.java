@@ -27,8 +27,7 @@ public final class BeepRunnable implements Runnable {
             currentRepeat = currentRepeat + 1;
             view.postDelayed(this, interval);
             view.setText(String.valueOf(repeats));
-        }
-        else {
+        } else {
             // beep is over, just reset the counter
             reset();
         }
