@@ -107,13 +107,13 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     private TextView mValue;
     private TextView mTxtTimer;
     private Button mBtnTakePic;
-    private int mRepeatAlarm=5;
+    private int mRepeatAlarm = 5;
 
     double xCenter = -1;
     double yCenter = -1;
 
-    private MediaPlayer mPlayer1 ;
-    private MediaPlayer mPlayer2 ;
+    private MediaPlayer mPlayer1;
+    private MediaPlayer mPlayer2;
     private MediaPlayer mPlayer3;
     private boolean mOpen;
     private boolean mClose;
@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     };
 
     public void start() {
-        if(timer != null) {
+        if (timer != null) {
             return;
         }
         timer = new Timer();
@@ -240,7 +240,6 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         Log.i(TAG, "Instantiated new " + this.getClass());
 
 
-
     }
 
     /**
@@ -258,10 +257,10 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         mOpenCvCameraView.setVisibility(CameraBridgeViewBase.VISIBLE);
         mOpenCvCameraView.setCvCameraViewListener(this);
 
-        mValue =findViewById(R.id.method);
-        mTxtTimer=findViewById(R.id.txt_timer);
+        mValue = findViewById(R.id.method);
+        mTxtTimer = findViewById(R.id.txt_timer);
 
-        mBeepRunnable= new BeepRunnable(mTxtTimer, 4, 500);
+        mBeepRunnable = new BeepRunnable(mTxtTimer, 4, 500);
 
 
         mPlayer1 = MediaPlayer.create(MainActivity.this, R.raw.camerafocus);
@@ -281,29 +280,24 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
             });*/
 
 
+        //  mPlayer3.stop();
 
 
-      //  mPlayer3.stop();
-
-
-
-
-       mBtnTakePic=findViewById(R.id.btnTakePic);
-       mBtnTakePic.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               if (isTakePic) {
-                   isTakePic=false;
-                   mIsTimer=false;
-                   mBtnTakePic.setText("Take new pic ="+String.valueOf(isTakePic));
-               }else {
-                   isTakePic=true;
-                   mIsTimer=true;
-                   mBtnTakePic.setText("Take new pic ="+String.valueOf(isTakePic));
-               }
-           }
-       });
-
+        mBtnTakePic = findViewById(R.id.btnTakePic);
+        mBtnTakePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isTakePic) {
+                    isTakePic = false;
+                    mIsTimer = false;
+                    mBtnTakePic.setText("Take new pic =" + String.valueOf(isTakePic));
+                } else {
+                    isTakePic = true;
+                    mIsTimer = true;
+                    mBtnTakePic.setText("Take new pic =" + String.valueOf(isTakePic));
+                }
+            }
+        });
 
 
     }
@@ -348,7 +342,6 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         mZoomWindow.release();
         mZoomWindow2.release();
     }
-
 
 
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
@@ -492,7 +485,8 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
     }
 
-    long time=5;
+    long time = 5;
+
     @Override
     public void run() {
         running = true;
@@ -506,54 +500,54 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
                     if (isTakePic) {
                         int mNewQtdCloseHands = mCloseHand.toList().size();
                         int mNewQtdOpenHand = mOpenHand.toList().size();
-                        if(qtdOpenedHand!=mNewQtdOpenHand&&!mOpen){
-                            qtdOpenedHand=mNewQtdOpenHand;
+                        if (qtdOpenedHand != mNewQtdOpenHand && !mOpen) {
+                            qtdOpenedHand = mNewQtdOpenHand;
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     mValue.setText("open");
                                     mPlayer1.start();
-                                    mOpen=true;
-                                    mClose=false;
-                                    count=0;
+                                    mOpen = true;
+                                    mClose = false;
+                                    count = 0;
                                 }
                             });
                         }
 
                         if (qtdClosedHand != mNewQtdCloseHands) {
-                                qtdClosedHand = mNewQtdCloseHands;
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        mValue.setText("close");
-                                        if (mIsTimer) {
-                                            mTxtTimer.setText(String.valueOf(count));
-                                            for (int i=1; i<=5 ; i++){
-                                                mPlayer1.start();
-                                                count++;
-                                                while(mPlayer1.isPlaying());
-                                            }
-
-
-                                            mPlayer2.start();
-                                            mOpen=false;
-                                            mClose =true;
-                                            mIsTimer=false;
-                                            isTakePic=false;
-                                            mBtnTakePic.setText("Take new pic ="+String.valueOf(isTakePic));
-                                            mTxtTimer.setText("0");
-
+                            qtdClosedHand = mNewQtdCloseHands;
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mValue.setText("close");
+                                    if (mIsTimer) {
+                                        mTxtTimer.setText(String.valueOf(count));
+                                        for (int i = 1; i <= 5; i++) {
+                                            mPlayer1.start();
+                                            count++;
+                                            while (mPlayer1.isPlaying()) ;
                                         }
 
+
+                                        mPlayer2.start();
+                                        mOpen = false;
+                                        mClose = true;
+                                        mIsTimer = false;
+                                        isTakePic = false;
+                                        mBtnTakePic.setText("Take new pic =" + String.valueOf(isTakePic));
+                                        mTxtTimer.setText("0");
+
                                     }
-                                });
-                            }
+
+                                }
+                            });
+                        }
 
                     }
 
 
                     Thread.sleep(500);//if you want an interval
-                  //  mRgba = null;
+                    //  mRgba = null;
                 }
                 Thread.sleep(50);
             } catch (Throwable t) {
@@ -564,7 +558,6 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
             }
         }
     }
-
 
 
     public void startDetect() {
