@@ -41,6 +41,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2, Runnable {
+    private CameraSurfaceView oCameraSurfaceView;
+
+
 
     public static final int JAVA_DETECTOR = 0;
     public static final int NATIVE_DETECTOR = 1;

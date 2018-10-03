@@ -1,2 +1,4 @@
 include ':app'
 include ':openCVLibrary340'
+include ':eyesight'
+
