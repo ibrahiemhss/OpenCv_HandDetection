@@ -41,7 +41,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2, Runnable {
-    private CameraSurfaceView oCameraSurfaceView;
 
 
 
@@ -110,7 +109,6 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     private boolean mClose;
     private boolean mIsTimer;
     private boolean isTakePic;
-    private BeepRunnable mBeepRunnable;
     private boolean started = false;
     private Handler handler = new Handler();
     private Timer timer;
@@ -245,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         mValue = findViewById(R.id.method);
         mTxtTimer = findViewById(R.id.txt_timer);
 
-        mBeepRunnable = new BeepRunnable(mTxtTimer, 4, 500);
+      //  mBeepRunnable = new BeepRunnable(mTxtTimer, 4, 500);
 
 
         mPlayer1 = MediaPlayer.create(MainActivity.this, R.raw.camerafocus);
@@ -310,10 +308,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     public void onDestroy() {
         super.onDestroy();
         disableCamera();
-        if (mBeepRunnable != null) {
-            mBeepRunnable.destroy();
-            mBeepRunnable = null;
-        }
+
     }
 
     public void onCameraViewStarted(int width, int height) {

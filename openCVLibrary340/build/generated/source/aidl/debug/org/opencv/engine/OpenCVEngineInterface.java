@@ -1,6 +1,6 @@
 /*
  * This file is auto-generated.  DO NOT MODIFY.
- * Original file: /home/ibrahim/AndroidStudioProjects/OpenCv_tutorial/SelfieCameByHand/openCVLibrary340/src/main/aidl/org/opencv/engine/OpenCVEngineInterface.aidl
+ * Original file: /home/ibrahim/AndroidStudioProjects/OPENCV_PROJECTS/SelfieCameByHand/openCVLibrary340/src/main/aidl/org/opencv/engine/OpenCVEngineInterface.aidl
  */
 package org.opencv.engine;
 /**
